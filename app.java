@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.Date;
+import java.util.Scanner;
 
 public class app {
     // Connection to Postgres; used in functions
@@ -29,14 +30,7 @@ public class app {
                 System.out.println("Failed to establish connection.");
             }
 
-            // Run CRUD functions
-            getAllStudents();
-            addStudent("First", "Last", "email", "2025-10-29");
-            getAllStudents();
-            updateStudentEmail(4, "updatedEmail");
-            getAllStudents();
-            deleteStudent(4);
-            getAllStudents();
+            doDemoSequence();
 
             // Close connection to Postgres
             conn.close();
@@ -139,6 +133,36 @@ public class app {
         System.out.printf("Failed to delete student with id %d.\n", 
             student_id);
         return false;
+    }
+
+    public static void doDemoSequence() {
+        // Performs CRUD operations in sequence, waiting for user input between operations.
+
+        // Scanner to allow wait between CRUD operations
+        Scanner scanner = new Scanner(System.in);
+
+        // Run CRUD functions
+        System.out.println("\nPress enter to perform getAllStudents()");
+        scanner.nextLine();
+        getAllStudents();
+
+        System.out.println("\nPress enter to perform addStudent() [INSERT]");
+        scanner.nextLine();
+        addStudent("First", "Last", "email", "2025-10-29");
+        getAllStudents();
+        
+        System.out.println("\nPress enter to perform updateStudentEmail() [UPDATE]");
+        scanner.nextLine();
+        updateStudentEmail(4, "updatedEmail");
+        getAllStudents();
+
+        System.out.println("\nPress enter to perform deleteStudent() [DELETE]");
+        scanner.nextLine();
+        deleteStudent(4);
+        getAllStudents();
+
+        System.out.println();
+        scanner.close();
     }
 
 }
